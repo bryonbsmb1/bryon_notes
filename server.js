@@ -33,7 +33,25 @@ app.use(express.static('public'));
         });
         });
 
+app.post('/api/notes', (req, res) => {
+
+    if (err) throw err;
+    const obj =JSON.parse(data);
+    console.log(obj);
+    obj.push(note);
+    fs.writeFile('./db/db.json', JSON.stringify(obj), (err, data) => {
+        if (err) throw err;
+        fs.readFile('./db/db.json', (err, data) => { if (err) throw err; res.send(JSON.parse(data));
+
+        });
+    } );
+});  
+
+app.delete('/api/notes/:id', (req,res) => {if (err) throw err; const obj = JSON.parse(data); obj. array.forEach(element => {
+    
+});}
 
 
 
-        
+
+
