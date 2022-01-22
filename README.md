@@ -1,1 +1,0 @@
-# bryon_notes
