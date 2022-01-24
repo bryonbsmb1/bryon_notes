@@ -2,9 +2,13 @@
 
 const express = require('express');
 
+// needed to add notes to render the site route
+
 const fs = require('fs');
 
-const fs = require('path');
+const notes = require('./db/db.json')
+
+const path = require('path');
 
 const uuid = require('uuid');
 
@@ -14,20 +18,24 @@ const PORT =process.env.PORT || 3001;
 
 
 
-
-app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
+
 app.use(express.static('public'));
 
+// added app.get notes
+    app.get('/', (req, res) => {res.sendFile(path.join(__dirname, '/public/index.html'));
+        });
+    
+    
+    app.get('/notes', (req, res) => {res.sendFile(path.join(__dirname, '/public/notes.html'));
+        });
 
-    app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
-        });
-    app.get('/notes', (req, res) => {
-      res.sendFile(path.join(__dirname, '/public/notes.html'));
-        });
-    app.get('/api/notes', (req, res) => {
-      fs.readFile('./db/db.json', (err, data) => {
+        
+    app.get('/api/notes', (req,res) => res.status(200).json(notes))
+    
+
+    app.get('/api/notes', (req, res) => {fs.readFile('./db/db.json', (err, data) => {
           if (err) throw err;
           res.send(JSON.parse(data));  
         });
